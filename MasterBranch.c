@@ -61,13 +61,13 @@ int main (void)
     
   
   customermenu();
- 
+  break;
   
     case 2:
       
   
   adminmenu();
-  
+  break;
   
   case 3:
         printf("goodbye\n");
