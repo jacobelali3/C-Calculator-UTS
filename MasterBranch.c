@@ -7,7 +7,14 @@
 #define MAX_NUM_CUSTOMER 10
 #define DB_NAME "database"
 #define MAX_CUSTOMER_LEN 1000000
-
+#define MAX_NUM_PLAN 5
+typedef struct 
+{
+    int years;
+    int ratio;
+}plan_list_t;
+   plan_list_t plan[MAX_NUM_PLAN];
+   int num_plan = 0;
 
 typedef struct   
 {
@@ -52,16 +59,16 @@ int main (void)
           
     case 1:
     
-  {
+  
   customermenu();
  
-  } 
+  
     case 2:
       
-  {
+  
   adminmenu();
   
-  }
+  
   case 3:
         printf("goodbye\n");
         break;
@@ -208,7 +215,74 @@ void addNew (void)
 void displayplan (void)
 {
 
-    customermenu();
+     {
+
+    int x = 0;
+    int y = 0;
+    int year = 0;
+    char m = 123;
+    printf("Enter plan years or enter password to show all information>\n");
+    scanf("%d", &year);
+
+    if (num_plan == 0)
+    {
+        printf("No plan information\n");
+        customermenu();
+    }
+
+
+    if (year == m)
+    {
+        printf("%-6s %-15s\n", "YEARS", "RATIO");
+        printf("%-6s %-15s\n", "------", "---------------");
+        for (x = 0; x < num_plan; x++)
+        {
+            
+            printf("%-6d %-15d\n", 
+                plan[x].years,
+                plan[x].ratio
+                );  
+        }
+    }
+    else
+    {
+        y = 0;
+        for (x = 0; x < num_plan; x++)
+        {
+            if (year == plan[x].years)
+            {
+                y = 1;
+                break;
+            }
+
+        }
+
+        if (!y)
+        {
+            printf("No plan information.\n");
+            customermenu();
+        }
+
+
+        printf("%-6s %-15s\n", "YEARS", "RATIO");
+        printf("%-6s %-15s\n", "------", "---------------");
+        for (x = 0; x < num_plan; x++)
+        {
+            if (year == plan[x].years)
+            {
+
+                 printf("%-6d %-15d\n", 
+                plan[x].years,
+                plan[x].ratio
+                    );
+            }
+
+        }
+
+    }
+
+}
+customermenu();
 }
 
 
@@ -377,7 +451,34 @@ void saveInfo (void)
 }
 void addplan (void)
 {
-    printf("wait to complete\n");
+    {
+
+
+        int check = 0;
+        if (num_plan == MAX_NUM_PLAN)
+        {
+            printf("Cannot add more plan - memory full\n");
+            return;
+        }
+    
+  
+        printf("Enter plan period\n");
+        
+            scanf("%d", &plan[num_plan].years);
+
+        
+
+    printf("Enter plan ratio\n");
+    scanf("%d", &plan[num_plan].ratio);
+        
+
+
+    while ((check = getchar()) != '\n');
+
+
+    num_plan++;
+    }
+    adminmenu();
 }
 void savecustomerinfo (void)
 {
