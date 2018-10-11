@@ -127,12 +127,14 @@ void customermenu (void)
 void adminmenu (void)
 {
     printf("\n"
-        "1.add plan.\n"
-        "2.save customer information.\n" 
-        "3.read customer information.\n"
-        "4.delete customer information.\n"
-        "5.delete plan.\n"
-        "6. Back to top level.\n"
+        "1.Add plan.\n"
+        "2.Read customer information."
+        "3.Display plan list."
+        "3.Save customer information.\n" 
+        "4.Read customer information.\n"
+        "5.Delete customer information.\n"
+        "6.Delete plan.\n"
+        "7.Back to top level.\n"
         "Enter choice (number between 1-6)>\n" );
     int choice3 = -1;
     int check1 = 0;
@@ -145,18 +147,24 @@ void adminmenu (void)
             addplan();
             break;
         case 2:
-            savecustomerinfo();
+            displayinfo();
             break;
         case 3:
-            readinfo();
+            displayplan();
             break;
         case 4:
-            deleteinfo();
-            break; 
+            savecustomerinfo();
+            break;
         case 5:
-            deleteplan();
+            readinfo();
             break;
         case 6:
+            deleteinfo();
+            break; 
+        case 7:
+            deleteplan();
+            break;
+        case 8:
             Back();
             break;
              default: printf("Invalid choice.\n");  
