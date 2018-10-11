@@ -43,6 +43,8 @@ void deleteinfo (void);
 void deleteplan (void);
 void simpleInterest(void);
 void compoundInterest(void);
+void admindisplayplan (void);
+void admindisplayinfo (void);
 
 int main (void)  
 {
@@ -59,15 +61,14 @@ int main (void)
           
     case 1:
     
-  
   customermenu();
   break;
   
-    case 2:
-      
+     case 2:
+     
+   adminmenu();
+   break;
   
-  adminmenu();
-  break;
   
   case 3:
         printf("goodbye\n");
@@ -127,13 +128,15 @@ void customermenu (void)
 void adminmenu (void)
 {
     printf("\n"
-        "1.add plan.\n"
-        "2.save customer information.\n" 
-        "3.read customer information.\n"
-        "4.delete customer information.\n"
-        "5.delete plan.\n"
-        "6. Back to top level.\n"
-        "Enter choice (number between 1-6)>\n" );
+        "1.Add plan.\n"
+        "2.Display customer information.\n"
+        "3.Display plan list.\n"
+        "4.Save customer information.\n" 
+        "5.Read customer information.\n"
+        "6.Delete customer information.\n"
+        "7.Delete plan.\n"
+        "8.Back to top level.\n"
+        "Enter choice (number between 1-8)>\n" );
     int choice3 = -1;
     int check1 = 0;
     scanf("%d", &choice3);
@@ -145,18 +148,24 @@ void adminmenu (void)
             addplan();
             break;
         case 2:
-            savecustomerinfo();
+            admindisplayinfo();
             break;
         case 3:
-            readinfo();
+            admindisplayplan();
             break;
         case 4:
-            deleteinfo();
-            break; 
+            savecustomerinfo();
+            break;
         case 5:
-            deleteplan();
+            readinfo();
             break;
         case 6:
+            deleteinfo();
+            break; 
+        case 7:
+            deleteplan();
+            break;
+        case 8:
             Back();
             break;
              default: printf("Invalid choice.\n");  
@@ -286,6 +295,80 @@ customermenu();
 }
 
 
+
+void admindisplayplan (void)
+{
+
+     {
+
+    int x = 0;
+    int y = 0;
+    int year = 0;
+    char m = 123;
+    printf("Enter plan years or enter password to show all information>\n");
+    scanf("%d", &year);
+
+    if (num_plan == 0)
+    {
+        printf("No plan information\n");
+        customermenu();
+    }
+
+
+    if (year == m)
+    {
+        printf("%-6s %-15s\n", "YEARS", "RATIO");
+        printf("%-6s %-15s\n", "------", "---------------");
+        for (x = 0; x < num_plan; x++)
+        {
+            
+            printf("%-6d %-15d\n", 
+                plan[x].years,
+                plan[x].ratio
+                );  
+        }
+    }
+    else
+    {
+        y = 0;
+        for (x = 0; x < num_plan; x++)
+        {
+            if (year == plan[x].years)
+            {
+                y = 1;
+                break;
+            }
+
+        }
+
+        if (!y)
+        {
+            printf("No plan information.\n");
+            adminmenu();
+        }
+
+
+        printf("%-6s %-15s\n", "YEARS", "RATIO");
+        printf("%-6s %-15s\n", "------", "---------------");
+        for (x = 0; x < num_plan; x++)
+        {
+            if (year == plan[x].years)
+            {
+
+                 printf("%-6d %-15d\n", 
+                plan[x].years,
+                plan[x].ratio
+                    );
+            }
+
+        }
+
+    }
+
+}
+adminmenu();
+}
+
 void displayinfo (void)
 
 {
@@ -360,6 +443,82 @@ void displayinfo (void)
 
 }
     customermenu();
+}
+
+void admindisplayinfo (void)
+
+{
+   {
+
+    int i = 0;
+    int find = 0;
+    char name[MAX_CUSTOMER_LEN+1] = { 0 };
+    printf("Enter customer name or enter * to show all information>\n");
+    scanf("%s", name);
+
+    if (num_customer == 0)
+    {
+        printf("No information\n");
+        customermenu();
+    }
+
+
+    if (0 == strcmp(name, "*"))
+    {
+        printf("%-6s %-15s %-15s %-6s\n", "NAME", "DEPOSIT AMOUNT", "PERIOD", "RATE");
+        printf("%-6s %-15s %-15s %-6s\n", "------", "---------------", "---------------", "------");
+        for (i = 0; i < num_customer; i++)
+        {
+            
+            printf("%-6s %-15d %-15d %-6d\n", 
+                customer[i].name,
+                customer[i].deposit,
+                customer[i].period,
+                customer[i].rate
+                );  
+        }
+    }
+    else
+    {
+        find = 0;
+        for (i = 0; i < num_customer; i++)
+        {
+            if (0 == strcmp(name, customer[i].name))
+            {
+                find = 1;
+                break;
+            }
+
+        }
+
+        if (!find)
+        {
+            printf("No information.\n");
+            adminmenu();
+        }
+
+
+        printf("%-6s %-15s %-15s %-6s\n", "NAME", "DEPOSIT AMOUNT", "PERIOD", "RATE");
+        printf("%-6s %-15s %-15s %-6s\n", "------", "---------------", "---------------", "------");
+        for (i = 0; i < num_customer; i++)
+        {
+            if (0 == strcmp(name, customer[i].name))
+            {
+
+                 printf("%-6s %-15d %-15d %-6d\n", 
+                customer[i].name,
+                customer[i].deposit,
+                customer[i].period,
+                customer[i].rate
+                    );
+            }
+
+        }
+
+    }
+
+}
+    adminmenu();
 }
 
 void calculateInterest (void)
@@ -488,12 +647,33 @@ void readinfo (void)
 {
     printf("wait to complete\n");
 }
+
+
 void deleteinfo (void)
 {
-    printf("wait to complete\n");
+    if(num_customer>0)
+     {
+        num_customer--;
+        printf("Delete the last lane successful\n");
+        adminmenu();
+     }
+    else
+     {
+        printf("Customer information is empty\n");
+        adminmenu();
+     }
 }
 void deleteplan (void)
 {
-    printf("wait to complete\n");
+    if(num_plan>0)
+     {
+        num_plan--;
+        printf("Delete the last plan lane successful\n");
+        adminmenu();
+     }
+    else
+     {
+        printf("Plan list is empty\n");
+        adminmenu();
+     }
 }
-
