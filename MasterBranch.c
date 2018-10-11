@@ -159,8 +159,7 @@ void adminmenu (void)
 
 void Back (void)
 {
-printf("wait to complete\n");
-customermenu();
+main();
 }
 
 
