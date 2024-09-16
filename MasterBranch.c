@@ -606,7 +606,11 @@ void compoundInterest(void)
 
 void saveInfo (void)
 {
-    printf("wait to complete\n");
+    FILE *fp = fopen(DB_NAME, "wb");
+    fwrite(&num_customer, sizeof(int), 1, fp);
+    fwrite(customer, sizeof(customer_list_t), num_customer, fp);
+    fclose(fp);
+    customermenu();
 }
 void addplan (void)
 {
@@ -645,7 +649,15 @@ void savecustomerinfo (void)
 }
 void readinfo (void)
 {
-    printf("wait to complete\n");
+     FILE *fp = fopen(DB_NAME, "rb");
+    if (fp == NULL) {
+        printf("Read error\n");
+        return;
+    }
+    fread(&num_customer, sizeof(int), 1, fp);
+    fread(customer, sizeof(customer_list_t), num_customer, fp);
+    fclose(fp);
+    adminmenu();
 }
 
 
